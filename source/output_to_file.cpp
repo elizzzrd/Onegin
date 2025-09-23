@@ -3,6 +3,7 @@
 #include "read_file.h"
 #include "std_str.h"
 #include "output_to_file.h"
+#include "text.h"
 
 
 void write_one_poem_to_file(char * poem[], int lines, FILE * file)
@@ -20,13 +21,9 @@ void write_one_poem_to_file(char * poem[], int lines, FILE * file)
 }
 
 
-void output_to_file(char * sorted_lines[], char * reverse_sorted_lines[], char * lines_ptr[], int lines)
+void output_to_file(char * sorted_lines[], char * reverse_sorted_lines[], text_t * text)
 {
-    assert(sorted_lines != NULL);
-    assert(reverse_sorted_lines != NULL);
-    assert(lines_ptr != NULL);
-    assert(lines < 0 || lines < MAX_LINES);
-
+    int lines = text -> lines_count;
     const char * filename = "text/poem.txt";
     FILE * file = fopen(filename, "w");
     if (!file) 
@@ -42,7 +39,7 @@ void output_to_file(char * sorted_lines[], char * reverse_sorted_lines[], char *
     write_one_poem_to_file(reverse_sorted_lines, lines, file);
 
     fprintf(file, "Original poem\n");
-    write_one_poem_to_file(lines_ptr, lines, file);
+    write_one_poem_to_file(text -> original_lines, lines, file);
 
     fclose(file);
 }

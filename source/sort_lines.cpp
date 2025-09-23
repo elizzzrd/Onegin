@@ -28,6 +28,18 @@ void direct_sort(char * ptr_massive[], int lines) // bubble sort version
     }
 }
 
+int direct_compare_str(const void * string1,
+                    const void * string2)
+{
+    const char * s1 = *(const char **)string1;
+    const char * s2 = *(const char **)string2;
+
+   int res = own_strcmp(s1, s2);
+   return res;
+}
+
+
+
 
 int reverse_compare_str(const void * string1,
                 const void * string2)

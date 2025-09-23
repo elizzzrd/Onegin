@@ -103,22 +103,3 @@ int copy_lines_to_massive(char ** dest_massive, char ** source_massive, int line
 }
 
 
-void clean_all_massives(char ** original_lines, char * buffer, 
-                        char ** sorted_lines, char ** reverse_sorted_lines, 
-                        int lines_count)
-{
-    free(original_lines);
-    free(buffer);
-
-    for (int i = 0; i < lines_count; i++) 
-    {
-        free(reverse_sorted_lines[i]);
-    }
-    free(reverse_sorted_lines);
-
-    for (int i = 0; i < lines_count; i++) 
-    {
-        free(sorted_lines[i]);
-    }
-    free(sorted_lines);
-}

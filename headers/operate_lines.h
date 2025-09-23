@@ -6,4 +6,3 @@ void free_lines(char * lines[], int count);
 char ** inizialize_massive(int lines_count);
 char * inizialize_buffer(size_t file_size);
 int copy_lines_to_massive(char ** dest_massive, char ** source_massive, int lines_count);
-void clean_all_massives(char ** original_lines, char * buffer, char ** sorted_lines, char ** reverse_sorted_lines, int lines_count);
