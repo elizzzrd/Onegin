@@ -1,7 +1,7 @@
 #pragma once
 #include <stdlib.h>
 
-char * own_strchr(const char *str, int c);
+char * own_strchr(char *str, int c);
 size_t own_strlen(const char *str);
 char * own_strcpy(char *destination, const char *source);
 char * own_strncpy(char * destination, const char *source, size_t size);

@@ -1,72 +1,52 @@
 #include <stdio.h>
-#include <string.h>
-#include "allocation_str.h"
+#include <stdlib.h>
 #include "read_file.h"
-#include "fun_lines.h"
+#include "sort_lines.h"
+#include "operate_lines.h"
+#include "output_to_file.h"
 
-char lines_square[MAX_LINES][MAX_LEN]= {};
-char * lines_ptr[MAX_LINES] = {};
 
 
 int main() 
 {
-    const char * filename = "onegin.txt";
+    char ** original_lines = inizialize_massive(MAX_LINES);
+    if (original_lines == NULL) return 1;
+
+    const char * filename = "text/oneginfull.txt";
     size_t file_size = get_file_size(filename);
 
-    char * buffer = (char *) calloc(file_size + 1, sizeof(char)); 
-    if (!buffer)
-    {
-        fprintf(stderr, "Memory allocation error");
-        return -1;
-    }
+    char * buffer = inizialize_buffer(file_size);
+    if (buffer == NULL) return 1;
 
     size_t read_symbols = read_text_from_file(filename, file_size, buffer);
-    buffer[read_symbols] = '\0';
-
-    int lines_count = set_ptr_massive(buffer, lines_ptr, MAX_LINES);
-    // printf("\nOriginal text:\n");
-    // print_strings_ptr(lines_ptr, lines_count);
-
-
-    char * sorted_lines[lines_count] = {};
-    for (int i = 0; i < lines_count; i++) 
+    if (read_symbols <= file_size) 
     {
-        sorted_lines[i] = own_strdup(lines_ptr[i]);
+    buffer[read_symbols] = '\0'; 
+    } 
+    else 
+    {
+    buffer[file_size] = '\0'; 
     }
+
+    int lines_count = set_ptr_massive(buffer, original_lines, MAX_LINES);
+
+
+    char ** sorted_lines = inizialize_massive(lines_count);
+    if (sorted_lines == NULL) return 1;
+    if (!copy_lines_to_massive(sorted_lines, original_lines, lines_count)) return 1;
     direct_sort(sorted_lines, lines_count);
-    // printf("\nSorted strings:\n");
-    // print_strings_ptr(sorted_lines, lines_count);
 
 
-    char * reverse_sorted_lines[lines_count] = {};
-    for (int i = 0; i < lines_count; i++) 
-    {
-        reverse_sorted_lines[i] = own_strdup(lines_ptr[i]);
-    }
-    qsort(reverse_sorted_lines, lines_count, sizeof(char *), reverse_compare_str);
-    // printf("\nSorted strings_2:\n");
-    // print_strings_ptr(reverse_sorted_lines, lines_count);
+    char ** reverse_sorted_lines = inizialize_massive(lines_count);
+    if (reverse_sorted_lines == NULL) return 1;
+    if (!copy_lines_to_massive(reverse_sorted_lines, original_lines, lines_count)) return 1;
+    qsort(reverse_sorted_lines, (size_t)lines_count, sizeof(char *), reverse_compare_str);
 
 
-    output_to_file(sorted_lines, reverse_sorted_lines, lines_ptr, file_size, lines_count);
-    free_lines(sorted_lines, lines_count);
-    free_lines(reverse_sorted_lines, lines_count);
-    free(buffer);
+    output_to_file(sorted_lines, reverse_sorted_lines, original_lines, lines_count);
+    clean_all_massives(original_lines, buffer, sorted_lines, reverse_sorted_lines, lines_count);
+    printf("Programm is finished!!!!\n");
+
     return 0;
 }
 
-
-
-
-// int count = 0;
-// if (!(count = read_to_ptr_massive(filename, lines_ptr, MAX_LINES, MAX_LEN)))
-// {
-//     return 1;
-// }
-// puts("Read in ptr massive");
-// print_strings_ptr(lines_ptr, count);
-// for (int index = 0; index < count; index++)
-// {
-//     strcpy(lines_square[index], lines_ptr[index]);
-// }
-// free_lines(lines_ptr, count);
