@@ -104,7 +104,7 @@ int own_strcmp(const char * s1, const char * s2)
     {
         free(original_str1);
         free(original_str2);
-        return -1000;
+        return -1000; 
     }
 
     char *str1_copy = original_str1;

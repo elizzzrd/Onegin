@@ -26,6 +26,7 @@ size_t get_file_size(const char * filename)
 size_t read_text_from_file(const char * filename, size_t size, char * buffer)
 {
     assert(filename != NULL);
+    assert(size > 0);
 
     FILE * file = fopen(filename, "r");
     if (!file) 
@@ -43,6 +44,9 @@ size_t read_text_from_file(const char * filename, size_t size, char * buffer)
 
 int set_ptr_massive(char * buffer, char * ptr_massive[], int max_lines)
 {
+    assert(buffer);
+    assert(ptr_massive);
+
     int count = 0;
     char * token = own_strtok(buffer, "\n");
     while (count < max_lines && token != NULL) 

@@ -9,7 +9,7 @@
 
 int main() 
 {
-    const char * filename = "text/oneginfull.txt";
+    const char * filename = "text/onegin.txt";
     text_t text = {};
 
     if (!create_text(filename, &text))
@@ -18,13 +18,16 @@ int main()
         return 1;
     }    
 
-    char ** sorted_lines = sort_text(&text, direct_compare_str);
-    char ** reverse_sorted_lines = sort_text(&text, reverse_compare_str);
-    
+    sort_text(&text, direct_compare_str);
+    output_to_file(&text);
 
-    output_to_file(sorted_lines, reverse_sorted_lines, &text);
-    clean_all(sorted_lines, reverse_sorted_lines, &text);
-    
+    sort_text(&text, reverse_compare_str);
+    output_to_file(&text);
+
+    //clean_all(sorted_lines, reverse_sorted_lines, &text);
+    free(text.original_lines);
+    free(text.buffer);
+
     printf("Programm is finished!!!!\n");
 
     return 0;

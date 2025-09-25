@@ -21,6 +21,7 @@ void print_strings_ptr(char * lines[MAX_LINES], int count)
 void swap_lines_ptr(char * lines_ptr[], int index_1, int index_2)
 {
     assert(lines_ptr != NULL);
+    
     if (index_1 < 0 || index_1 > MAX_LINES ||
         index_2 < 0 || index_2 > MAX_LINES)
     {
@@ -41,6 +42,9 @@ void swap_lines_ptr(char * lines_ptr[], int index_1, int index_2)
 
 void free_lines(char ** lines, int count) 
 {
+    assert(lines);
+    assert(count > 0);
+
     if (lines == NULL) return;
 
     for (int i = 0; i < count; i++) 
@@ -67,6 +71,8 @@ char ** inizialize_massive(int lines_count)
 
 char * inizialize_buffer(size_t file_size)
 {
+    assert(file_size > 0);
+
     if (file_size == 0)
     {
         fprintf(stderr, "File size is 0\n");

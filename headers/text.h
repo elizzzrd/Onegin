@@ -13,5 +13,6 @@ typedef struct
 typedef int (*comparator_t)(const void*, const void*);
 
 int create_text(const char * filename, text_t * text);
-char ** sort_text(text_t * text, comparator_t comparator);
+void sort_text(text_t * text, comparator_t comparator);
 void clean_all(char ** sorted_lines, char ** reverse_sorted_lines, text_t * text);
+
